@@ -56,6 +56,7 @@ class Day1
         {
             int number = Int32.Parse(stringToParse);
             return number;
+            
         }
         catch (FormatException)
         {

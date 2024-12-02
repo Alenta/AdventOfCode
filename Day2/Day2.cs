@@ -7,12 +7,9 @@ class Day2 {
         int safeLines = 0;
         int allLines = 0;
         try {
-                using StreamReader sr = new StreamReader("Day2-Input.txt");
-                string? line;
-                line = sr.ReadLine();
-                
-                if(line == null) return;
-                while ((line = sr.ReadLine()) != null) {
+            using StreamReader sr = new StreamReader("Day2-Input.txt");
+            string? line;            
+            while ((line = sr.ReadLine()) != null) {
                 List<int> checkList = new List<int>();
                 int i = 0, j = 0;
                 bool stringDone = false;
@@ -27,8 +24,11 @@ class Day2 {
                             return;
                         }
                         checkList.Add(parsedNumber);
+                        Console.WriteLine("Adding " + parsedNumber);
+
                         i = charLocation + 1;
                     } else {
+                        checkList.Add(ParseInt(line.Substring(i)));
                         stringDone = true;
                     }
                     j++;
@@ -59,7 +59,7 @@ class Day2 {
                             // Check if direction is consistent
                             if ((dir == 1 && nr < prevNr) || (dir == -1 && nr > prevNr)) {
                                 safe = false;
-                                Console.WriteLine($"Unsafe: Direction mismatch in {string.Join(" ", checkList)}");
+                                Console.WriteLine($"Unsafe: Wrong direction {string.Join(" ", checkList)}");
                                 break;
                             }
                         }
