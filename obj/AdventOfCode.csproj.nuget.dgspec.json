@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\marti\\OneDrive\\Skrivebord\\AdventOfCode\\AdventOfCode.csproj": {}
+    "C:\\Users\\marti\\OneDrive\\Skrivebord\\New folder\\AdventOfCode\\AdventOfCode.csproj": {}
   },
   "projects": {
-    "C:\\Users\\marti\\OneDrive\\Skrivebord\\AdventOfCode\\AdventOfCode.csproj": {
+    "C:\\Users\\marti\\OneDrive\\Skrivebord\\New folder\\AdventOfCode\\AdventOfCode.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marti\\OneDrive\\Skrivebord\\AdventOfCode\\AdventOfCode.csproj",
+        "projectUniqueName": "C:\\Users\\marti\\OneDrive\\Skrivebord\\New folder\\AdventOfCode\\AdventOfCode.csproj",
         "projectName": "AdventOfCode",
-        "projectPath": "C:\\Users\\marti\\OneDrive\\Skrivebord\\AdventOfCode\\AdventOfCode.csproj",
+        "projectPath": "C:\\Users\\marti\\OneDrive\\Skrivebord\\New folder\\AdventOfCode\\AdventOfCode.csproj",
         "packagesPath": "C:\\Users\\marti\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marti\\OneDrive\\Skrivebord\\AdventOfCode\\obj\\",
+        "outputPath": "C:\\Users\\marti\\OneDrive\\Skrivebord\\New folder\\AdventOfCode\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

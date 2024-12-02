@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using System.Linq;
 
-class Program
+class Day1
 {
     static void Main(string[] args){
         // int CompleteDifference = 0; Not needed anymore?

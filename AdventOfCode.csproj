@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <StartupObject>Day2</StartupObject>
+  </PropertyGroup>
+
+
 </Project>
