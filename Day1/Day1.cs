@@ -12,9 +12,8 @@ class Day1
         void SeparateLists() {
             
             try {
-                // Regex to output two numbers, separated by three spaces (Stolen from chatGPT)
+                // Regex to output two numbers, separated by three spaces (stolen from the internet)
                 Regex regex = new(@"^(\d+)\s{3}(\d+)$");
-
                 using StreamReader sr = new StreamReader("Day1-Input.txt");
                 string? line;
                 

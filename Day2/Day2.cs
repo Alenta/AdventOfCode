@@ -7,7 +7,7 @@ class Day2 {
         int safeLines = 0;
         int allLines = 0;
         try {
-            using StreamReader sr = new StreamReader("Day2-Input.txt");
+            using StreamReader sr = new StreamReader("test.txt");
             string? line;            
             while ((line = sr.ReadLine()) != null) {
                 List<int> checkList = new List<int>();
@@ -24,7 +24,7 @@ class Day2 {
                             return;
                         }
                         checkList.Add(parsedNumber);
-                        Console.WriteLine("Adding " + parsedNumber);
+                        //Console.WriteLine("Adding " + parsedNumber);
 
                         i = charLocation + 1;
                     } else {
@@ -37,6 +37,7 @@ class Day2 {
                 if (checkList.Count > 0) {
                     int prevNr = 0;
                     int dir = 0;
+                    int problems = 0;
                     bool safe = true;
 
                     foreach (int nr in checkList) {
@@ -47,9 +48,12 @@ class Day2 {
 
                         if (Math.Abs(prevNr - nr) > 3 || Math.Abs(prevNr - nr) == 0) {
                             // Numbers must not be more than 3 apart, and not equal
-                            safe = false;
-                            Console.WriteLine($"Unsafe: Numbers too far apart or equal in {string.Join(" ", checkList)}");
-                            break;
+                            problems +=1;
+                            Console.WriteLine(problems + " problem/s detected");
+
+                            if(problems > 1){ Console.WriteLine("Unsafe, breaking"); safe = false; break;}
+
+                            //Console.WriteLine($"Unsafe: Numbers too far apart or equal in {string.Join(" ", checkList)}");
                         }
 
                         if (dir == 0) {
@@ -58,16 +62,16 @@ class Day2 {
                         } else {
                             // Check if direction is consistent
                             if ((dir == 1 && nr < prevNr) || (dir == -1 && nr > prevNr)) {
-                                safe = false;
-                                Console.WriteLine($"Unsafe: Wrong direction {string.Join(" ", checkList)}");
-                                break;
+                                problems+=1;
+                                Console.WriteLine(problems + " problem/s detected");
+                                if(problems > 1){Console.WriteLine("Unsafe, breaking");  safe = false; break;}
                             }
                         }
                         prevNr = nr;
                     }
-
+                    //if(problems > 1) safe = false;
                     if (safe) {
-                        Console.WriteLine($"Safe line: {string.Join(" ", checkList)}");
+                        // Console.WriteLine($"Safe line: {string.Join(" ", checkList)}");
                         safeLines++;
                     }
 
