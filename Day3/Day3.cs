@@ -13,7 +13,7 @@ class Day3 {
             using StreamReader sr = new StreamReader("input.txt");
             // Matching starts off true
             bool doMatch = true;
-
+            
             while ((line = sr.ReadLine()) != null) {
                 bool lineDone = false;
                 int substrIndex = 0;

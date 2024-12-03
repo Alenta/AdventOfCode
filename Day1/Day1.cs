@@ -4,7 +4,6 @@ using System.Linq;
 class Day1
 {
     static void Main(string[] args){
-        // int CompleteDifference = 0; Not needed anymore?
         int SimilarityScore = 0;
         List<int> list1 = [];
         List<int> list2 = [];
@@ -43,22 +42,15 @@ class Day1
                 Console.WriteLine(SimilarityScore);
             }
         }
-    
     }
-    public static int FindDifference(int nr1, int nr2) { // Not needed anymore?
-        Console.WriteLine("Absolute: " + nr1+ " - " +nr2 +" = " + Math.Abs(nr1 - nr2));
-        return Math.Abs(nr1 - nr2);
-    }
+
     public static int ParseInt(string stringToParse)
     {
-        try
-        {
+        try {
             int number = Int32.Parse(stringToParse);
             return number;
-            
         }
-        catch (FormatException)
-        {
+        catch (FormatException) {
             Console.WriteLine($"Cannot parse {stringToParse} to a pure number");
             return 0;
         }

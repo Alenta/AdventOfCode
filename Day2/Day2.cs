@@ -8,7 +8,8 @@ class Day2 {
         int allLines = 0;
         try {
             using StreamReader sr = new StreamReader("test.txt");
-            string? line;            
+            string? line;
+
             while ((line = sr.ReadLine()) != null) {
                 List<int> checkList = new List<int>();
                 int i = 0, j = 0;
@@ -25,7 +26,6 @@ class Day2 {
                         }
                         checkList.Add(parsedNumber);
                         //Console.WriteLine("Adding " + parsedNumber);
-
                         i = charLocation + 1;
                     } else {
                         checkList.Add(ParseInt(line.Substring(i)));
@@ -35,6 +35,7 @@ class Day2 {
                 }
 
                 if (checkList.Count > 0) {
+                    Console.WriteLine("Checking: "+ string.Join(";", checkList));
                     int prevNr = 0;
                     int dir = 0;
                     int problems = 0;
@@ -46,32 +47,61 @@ class Day2 {
                             continue;
                         }
 
+                        // Check the absolute difference rule
                         if (Math.Abs(prevNr - nr) > 3 || Math.Abs(prevNr - nr) == 0) {
-                            // Numbers must not be more than 3 apart, and not equal
-                            problems +=1;
-                            Console.WriteLine(problems + " problem/s detected");
+                            problems++;
 
-                            if(problems > 1){ Console.WriteLine("Unsafe, breaking"); safe = false; break;}
+                            if (problems >= 2) {
+                                if(Math.Abs(prevNr - nr) > 3) Console.WriteLine("Unsafe, gap >3 " + nr);
+                                if(Math.Abs(prevNr - nr) == 0) Console.WriteLine("Unsafe, repeating values " + nr);
+                                safe = false;
+                                break;
+                            }
 
-                            //Console.WriteLine($"Unsafe: Numbers too far apart or equal in {string.Join(" ", checkList)}");
-                        }
-
-                        if (dir == 0) {
-                            // Determine direction (ascending/descending)
-                            dir = (nr > prevNr) ? 1 : -1;
-                        } else {
-                            // Check if direction is consistent
-                            if ((dir == 1 && nr < prevNr) || (dir == -1 && nr > prevNr)) {
-                                problems+=1;
-                                Console.WriteLine(problems + " problem/s detected");
-                                if(problems > 1){Console.WriteLine("Unsafe, breaking");  safe = false; break;}
+                            if (problems == 1) {
+                                if (dir == 0 || (dir == 1 && nr > prevNr) || (dir == -1 && nr < prevNr)) {
+                                    Console.WriteLine($"Ignoring {nr}, updating prevNr to {nr}");
+                                    prevNr = nr; // Update prevNr if the current number fits the trend
+                                } else {
+                                    Console.WriteLine($"Ignoring {nr}, keeping prevNr as {prevNr}");
+                                }
+                                continue; // Skip further checks for this number
                             }
                         }
+
+                        // Check direction consistency
+                        if (dir == 0) {
+                            // Establish direction
+                            dir = (nr > prevNr) ? 1 : -1;
+                        } else {
+                            // Validate the direction
+                            if (dir == -1 && nr > prevNr+1) { // We are looking for when these do NOT align
+                                problems++;
+
+                                Console.WriteLine(problems + " problem/s detected");
+                                if (problems >= 2) {
+                                    if(dir == -1 && nr > prevNr) Console.WriteLine("Unsafe, wrong dir");
+                                    //if(Math.Abs(prevNr - nr) == 0) Console.WriteLine("Unsafe, repeating values " + nr);
+                                    safe = false;
+                                    break;
+                                }
+
+                                if (problems == 1) {
+                                    if (checkList.IndexOf(nr) == 1) {
+                                        dir = 0;
+                                    }
+                                    Console.WriteLine($"wrong direction; Ignoring current:->{nr}, Prev:{prevNr}dir->{dir}");
+                                    continue; // Skip updating prevNr
+                                }
+                            }
+                        }
+
+                        // Update prevNr only if no new problems are detected
                         prevNr = nr;
                     }
-                    //if(problems > 1) safe = false;
+
+                    // After the loop, check if the line is safe
                     if (safe) {
-                        // Console.WriteLine($"Safe line: {string.Join(" ", checkList)}");
                         safeLines++;
                     }
 
