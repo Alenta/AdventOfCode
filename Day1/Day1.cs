@@ -18,7 +18,7 @@ class Day1
                 
                 while ((line = sr.ReadLine()) != null) {
                     if (string.IsNullOrWhiteSpace(line)) continue;
-
+                    
                     Match match = regex.Match(line);
                     if (match.Success)
                     {
