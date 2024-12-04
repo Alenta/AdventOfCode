@@ -41,64 +41,113 @@ class Day2 {
                     int problems = 0;
                     bool safe = true;
 
-                    foreach (int nr in checkList) {
-                        if (prevNr == 0) {
+                    int? problemID = null; // Track the number causing the first problem
+                    bool directionReset = false; // Track if the direction has been reset
+
+                    foreach (int nr in checkList)
+                    {
+                        if (prevNr == 0)
+                        {
                             prevNr = nr;
                             continue;
                         }
 
                         // Check the absolute difference rule
-                        if (Math.Abs(prevNr - nr) > 3 || Math.Abs(prevNr - nr) == 0) {
+                        if (Math.Abs(prevNr - nr) > 3 || Math.Abs(prevNr - nr) == 0)
+                        {
                             problems++;
 
-                            if (problems >= 2) {
-                                if(Math.Abs(prevNr - nr) > 3) Console.WriteLine("Unsafe, gap >3 " + nr);
-                                if(Math.Abs(prevNr - nr) == 0) Console.WriteLine("Unsafe, repeating values " + nr);
+                            if (problems >= 2)
+                            {
+                                // Attempt to resolve by replacing prevNr with problematicNr
+                                if (problemID != null && Math.Abs(problemID.Value - nr) <= 3)
+                                {
+                                    Console.WriteLine($"Resolving with problematicNr {problemID}. Updating prevNr.");
+                                    prevNr = problemID.Value;
+                                    problemID = null;
+                                    problems--; // Reduce problem count as we resolved one
+                                    continue;
+                                }
+
+                                Console.WriteLine($"Unsafe due to: {nr} | Problems: {problems}");
                                 safe = false;
                                 break;
                             }
 
-                            if (problems == 1) {
-                                if (dir == 0 || (dir == 1 && nr > prevNr) || (dir == -1 && nr < prevNr)) {
+                            if (problems == 1)
+                            {
+                                // Log the problematic number
+                                problemID = nr;
+
+                                if (dir == 0 || (dir == 1 && nr > prevNr) || (dir == -1 && nr < prevNr))
+                                {
                                     Console.WriteLine($"Ignoring {nr}, updating prevNr to {nr}");
-                                    prevNr = nr; // Update prevNr if the current number fits the trend
-                                } else {
+                                    prevNr = nr; // Allow replacement of prevNr if it resolves the issue
+                                }
+                                else
+                                {
                                     Console.WriteLine($"Ignoring {nr}, keeping prevNr as {prevNr}");
                                 }
-                                continue; // Skip further checks for this number
+
+                                continue;
                             }
                         }
 
                         // Check direction consistency
-                        if (dir == 0) {
+                        if (dir == 0)
+                        {
                             // Establish direction
                             dir = (nr > prevNr) ? 1 : -1;
-                        } else {
+                        }
+                        else
+                        {
                             // Validate the direction
-                            if (dir == -1 && nr > prevNr+1) { // We are looking for when these do NOT align
+                            if ((dir == 1 && nr < prevNr) || (dir == -1 && nr > prevNr))
+                            {
                                 problems++;
+                                Console.WriteLine($"Problem with direction at {nr}: prevNr = {prevNr}, dir = {dir}");
 
-                                Console.WriteLine(problems + " problem/s detected");
-                                if (problems >= 2) {
-                                    if(dir == -1 && nr > prevNr) Console.WriteLine("Unsafe, wrong dir");
-                                    //if(Math.Abs(prevNr - nr) == 0) Console.WriteLine("Unsafe, repeating values " + nr);
+                                if (problems >= 2)
+                                {
+                                    // Check if replacing prevNr with problematicNr resolves the issue
+                                    if (problemID != null && Math.Abs(problemID.Value - nr) <= 3)
+                                    {
+                                        Console.WriteLine($"Resolving with problematicNr {problemID}. Updating prevNr.");
+                                        prevNr = problemID.Value;
+                                        problemID = null;
+                                        problems--; // Reduce problem count as we resolved one
+                                        continue;
+                                    }
+
                                     safe = false;
                                     break;
                                 }
 
-                                if (problems == 1) {
-                                    if (checkList.IndexOf(nr) == 1) {
-                                        dir = 0;
-                                    }
-                                    Console.WriteLine($"wrong direction; Ignoring current:->{nr}, Prev:{prevNr}dir->{dir}");
-                                    continue; // Skip updating prevNr
+                                if (problems == 1)
+                                {
+                                    Console.WriteLine($"Resetting direction for {nr}. Ignoring this number.");
+                                    problemID = nr; // Track the reset number
+                                    dir = 0; // Reset direction
+                                    directionReset = true;
+                                    continue;
                                 }
                             }
                         }
 
                         // Update prevNr only if no new problems are detected
                         prevNr = nr;
+
+                        // Handle direction reset case
+                        if (directionReset)
+                        {
+                            Console.WriteLine($"Direction reset with {nr}. Updating direction.");
+                            dir = (nr > prevNr) ? 1 : -1; // Re-establish direction
+                            directionReset = false;
+                        }
                     }
+
+
+
 
                     // After the loop, check if the line is safe
                     if (safe) {
@@ -122,13 +171,10 @@ class Day2 {
     public static int GetNthIndex(string s, char t, int n)
     {
         int count = 0;
-        //Console.WriteLine(s);
         for (int i = 0; i < s.Length; i++)
         {
             if (s[i] == t) // Means the character we are at is a space
             {
-                //if(currentT != 0) previousT = currentT;
-                //currentT = i;
                 if (count == n)
                 {
                     return i;
@@ -136,7 +182,6 @@ class Day2 {
                 count++;
             }
         }
-        //Console.WriteLine($"Found no spaces");
         return -1;
     }
 

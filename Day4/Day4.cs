@@ -14,36 +14,35 @@ class Day4
         {
             // Read the file into a 2D array of characters
             string[] lines = File.ReadAllLines(filePath);
-            int rows = lines.Length;
-            int cols = lines[0].Length;
-            char[,] charArray = new char[rows, cols];
+            int cols = lines.Length;
+            int rows = lines[0].Length;
+            char[,] charArray = new char[cols, rows]; // 2D charArray defined by length of string array and length of line 1
 
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < cols; i++)
             {
-                for (int j = 0; j < cols; j++)
-                {
+                for (int j = 0; j < rows; j++)
+                { // Populate the charArray from the string array
                     charArray[i, j] = lines[i][j];
                 }
             }
 
             // Direction vectors for 8 directions
-            int[][] directions = {
-                new int[] { -1, 0 },  // Up
-                new int[] { 1, 0 },   // Down
-                new int[] { 0, -1 },  // Left
-                new int[] { 0, 1 },   // Right
-                new int[] { -1, -1 }, // Top-left diagonal
-                new int[] { -1, 1 },  // Top-right diagonal
-                new int[] { 1, -1 },  // Bottom-left diagonal
-                new int[] { 1, 1 }    // Bottom-right diagonal
-            };
+            int[][] directions = [
+                [-1, 0],  // Up
+                [1, 0],   // Down
+                [0, -1],  // Left
+                [0, 1],   // Right
+                [-1, -1], // Top-left diagonal
+                [-1, 1],  // Top-right diagonal
+                [1, -1],  // Bottom-left diagonal
+                [1, 1]    // Bottom-right diagonal
+            ];
 
-            // Search for the word
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < cols; i++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int j = 0; j < rows; j++)
                 {
-                    if (charArray[i, j] == wordToFind[0]) // Found the first letter
+                    if (charArray[i, j] == wordToFind[0]) // First letter identified
                     {
                         foreach (var dir in directions)
                         {
@@ -77,12 +76,12 @@ class Day4
             return false;
         }
 
-        for (int k = 0; k < word.Length; k++)
+        for (int i = 0; i < word.Length; i++)
         {
-            int newRow = startRow + k * dirRow;
-            int newCol = startCol + k * dirCol;
+            int newRow = startRow + i * dirRow;
+            int newCol = startCol + i * dirCol;
 
-            if (charArray[newRow, newCol] != word[k])
+            if (charArray[newRow, newCol] != word[i])
             {
                 return false;
             }
