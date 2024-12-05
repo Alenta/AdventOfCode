@@ -4,3 +4,4 @@ Day 1 was easy, but let's see how long I can go! ** </br>
 Day 2 was harder or maybe I had trouble focusing, skipped bonus but might go back to it. * </br>
 Day 3 was doable quickly enough. ** </br>
 Day 4 was... Harder. * </br>
+Day 5, spent half the time trying to understand the challenge prompt. ** </br>
