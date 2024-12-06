@@ -28,62 +28,75 @@ class Day6
         Directions dir = Directions.North;
         int steps = 0;
         Vector2 curPos = startPos;
-        while(!MazeSolved){
-            if(curPos != startPos) steps ++;
+        while (!MazeSolved)
+        {
+            if (curPos != startPos) steps++;
+
+            // Unified bounds check
+            if (startPos.X < 0 || startPos.X >= chars.GetLength(0) || startPos.Y < 0 || startPos.Y >= chars.GetLength(1))
+            {
+                Console.WriteLine($"Out of bounds: {startPos}");
+                MazeSolved = true;
+                break;
+            }
+
             switch (dir)
             {
                 case Directions.North:
-                if(startPos.X > chars.GetLength(0) || startPos.X < 0
-                    || startPos.Y > chars.GetLength(1) || startPos.Y < 0){
-                        Console.WriteLine(startPos + " is out side bounds of: " +0 + " , " +  chars.GetLength(0));
-                        MazeSolved = true;
+                    if (startPos.Y + 1 >= chars.GetLength(1) || chars[(int)startPos.X, (int)startPos.Y + 1] == '#')
+                    {
+                        Console.WriteLine("Hit boundary to the north, switching to east");
+                        dir = Directions.East;
                     }
-                if(chars[(int)startPos.X,(int)startPos.Y + 1] == '#') {
-                    Console.WriteLine("Hit boundary to the north, switching to east");
-                    dir = Directions.East;
-                }
-                else if(chars[(int)startPos.X,(int)startPos.Y + 1] == '.') {
-                    chars[(int)startPos.X,(int)startPos.Y] = 'X';
-                    Console.WriteLine("We set something to an X");
-                    startPos.Y +=1; 
-                }
-                break;
+                    else if (chars[(int)startPos.X, (int)startPos.Y + 1] == '.')
+                    {
+                        chars[(int)startPos.X, (int)startPos.Y] = 'X';
+                        Console.WriteLine($"Marking position {startPos} as X. Moving North.");
+                        startPos.Y += 1;
+                    }
+                    break;
+
                 case Directions.East:
-                if(chars[(int)startPos.X+1,(int)startPos.Y] == '#') {
-                    Console.WriteLine("Hit boundary to the east, switching to south");
+                    if (startPos.X + 1 >= chars.GetLength(0) || chars[(int)startPos.X + 1, (int)startPos.Y] == '#')
+                    {
+                        Console.WriteLine("Hit boundary to the east, switching to south");
+                        dir = Directions.South;
+                    }
+                    else if (chars[(int)startPos.X + 1, (int)startPos.Y] == '.')
+                    {
+                        chars[(int)startPos.X, (int)startPos.Y] = 'X';
+                        Console.WriteLine($"Marking position {startPos} as X. Moving East.");
+                        startPos.X += 1;
+                    }
+                    break;
 
-                    dir = Directions.South;
-                }
-                else if(chars[(int)startPos.X+1,(int)startPos.Y] == '.') {
-                    chars[(int)startPos.X,(int)startPos.Y] = 'X';
-                    steps++;
-                    startPos.X +=1; 
-                }
-                break;
                 case Directions.South:
-                if(chars[(int)startPos.X,(int)startPos.Y-1] == '#') {
-                    Console.WriteLine("Hit boundary to the east, switching to west");
+                    if (startPos.Y - 1 < 0 || chars[(int)startPos.X, (int)startPos.Y - 1] == '#')
+                    {
+                        Console.WriteLine("Hit boundary to the south, switching to west");
+                        dir = Directions.West;
+                    }
+                    else if (chars[(int)startPos.X, (int)startPos.Y - 1] == '.')
+                    {
+                        chars[(int)startPos.X, (int)startPos.Y] = 'X';
+                        Console.WriteLine($"Marking position {startPos} as X. Moving South.");
+                        startPos.Y -= 1;
+                    }
+                    break;
 
-                    dir = Directions.West;
-                }
-                else if(chars[(int)startPos.X,(int)startPos.Y-1] == '.') {
-                    chars[(int)startPos.X,(int)startPos.Y] = 'X';
-                    steps++;
-                    startPos.Y -=1; 
-                }
-                break;
                 case Directions.West:
-                if(chars[(int)startPos.X,(int)startPos.Y-1] == '#') {
-                    Console.WriteLine("Hit boundary to the west, switching to north");
-
-                    dir = Directions.North;
-                }
-                else if(chars[(int)startPos.X-1,(int)startPos.Y] == '.') {
-                    chars[(int)startPos.X,(int)startPos.Y] = 'X';
-                    steps++;
-                    startPos.X -=1; 
-                }
-                break;
+                    if (startPos.X - 1 < 0 || chars[(int)startPos.X - 1, (int)startPos.Y] == '#')
+                    {
+                        Console.WriteLine("Hit boundary to the west, switching to north");
+                        dir = Directions.North;
+                    }
+                    else if (chars[(int)startPos.X - 1, (int)startPos.Y] == '.')
+                    {
+                        chars[(int)startPos.X, (int)startPos.Y] = 'X';
+                        Console.WriteLine($"Marking position {startPos} as X. Moving West.");
+                        startPos.X -= 1;
+                    }
+                    break;
             }
         }
         int x = 0;
