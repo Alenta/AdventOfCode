@@ -3,10 +3,10 @@
     static void Main(string[] args) {
         string filePath = "Day5Input.txt";
         string[] lines = File.ReadAllLines(filePath);
-        Console.WriteLine(GetAnswer(lines, false));
+        Console.WriteLine(SafetyManualOrder(lines, false));
     }
 
-    public static int GetAnswer(string[] input, bool sortedOnly) {
+    public static int SafetyManualOrder(string[] input, bool sortedOnly) {
         var (rules, updates) = ParseInput(input);
         int total = updates.Select(update => {
             string original = string.Join(',', update);
@@ -15,7 +15,6 @@
                 if (rules.FirstOrDefault(r => r[0] == x && r[1] == y) != null) {
                     return -1;
                 }
-
                 if (rules.FirstOrDefault(r => r[0] == y && r[1] == x) != null) {
                     return 1;
                 }
