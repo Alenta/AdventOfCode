@@ -35,14 +35,14 @@ class Day7
             // This should perform better than using a list and checking for duplicates
             // We do lose the order of the elements using a HashSet, but that should be fine here
             HashSet<long> foundSolutions = [];
-
             void FindPermutations(int index, long currentValue)
             {
-                // If we've reached the end of the numbers, check the result
+                // If we've reached the end, check if the result matches the solution
                 if (index == numbers.Count)
                 {
                     if (currentValue == solution)
                     {
+                        // Console.WriteLine($"Match found: {currentExpression} = {solution}");
                         foundSolutions.Add(solution);
                     }
                     return;
@@ -54,12 +54,19 @@ class Day7
                 // Until it eventually hits the catch aboe (index == numbers.count)
                 FindPermutations(index + 1, currentValue + numbers[index]);
                 FindPermutations(index + 1, currentValue * numbers[index]);
+
+                // These were to help log the outputs and checking that things were not going off the rails
+                //FindPermutations(index + 1, currentValue + numbers[index], $"{currentExpression} + {numbers[index]}");
+                //FindPermutations(index + 1, currentValue * numbers[index], $"{currentExpression} * {numbers[index]}");
+                string concatenated = currentValue.ToString() + numbers[index].ToString();
+                if (long.TryParse(concatenated, out long concatenatedValue))
+                {
+                    FindPermutations(index + 1, concatenatedValue);
+                }
             }
-
-            // Start recursion
+            // Keep the recursion going
             FindPermutations(1, numbers[0]);
-
-            // Return true if we found any matching solutions
+            // FindPermutations(1, numbers[0], numbers[0].ToString());
             return foundSolutions.Count > 0;
         }
     }
