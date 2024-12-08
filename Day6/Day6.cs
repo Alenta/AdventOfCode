@@ -21,6 +21,7 @@ class Day6
             {
                 chars[i,j] = lines[i][j];
                 if(chars[i,j] == '^') { 
+                    // 2D-Array weirdness, j goes in x, i goes in y.
                     startPos.X = j; 
                     startPos.Y = i;
                     // Console.WriteLine(startPos.Y + ", "+startPos.X);
@@ -38,7 +39,7 @@ class Day6
     {
         bool MazeSolved = false;
         Directions dir = Directions.North;
-        // steps is mostly for bug-finding, but can also be interesting for efficiency
+        // steps is mostly for bug-finding (Check which step sticks), but can also be an interesting value
         int steps = 0;
 
         Dictionary<Directions, Vector2> direction = new Dictionary<Directions, Vector2>
@@ -55,13 +56,12 @@ class Day6
             Vector2 offset = direction[dir];
             Vector2 nextPos = new Vector2(startPos.X + offset.X, startPos.Y + offset.Y);
 
-            // Unified bouns check
+            // Unified bounds check
             if (nextPos.X < 0 || nextPos.X >= chars.GetLength(1) || nextPos.Y < 0 || nextPos.Y >= chars.GetLength(0))
             {
                 // Console.WriteLine($"Out of bounds: {startPos.Y},{startPos.X}");
                 chars[(int)startPos.Y, (int)startPos.X] = 'X';
                 MazeSolved = true;
-                break;
             }
 
             char nextChar = chars[(int)nextPos.Y, (int)nextPos.X];
