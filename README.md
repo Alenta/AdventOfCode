@@ -7,5 +7,5 @@ Day 4 was... Harder. * </br>
 Day 5, spent half the time trying to understand the challenge prompt. ** </br>
 Day 6, falling a bit behind due to time but still pushing * </br>
 Day 7 went suprisingly well ** </br>
-Day 8 stumped me, gave up after not really understanding the prompt
+Day 8 stumped me, gave up after not really understanding the prompt </br>
 Day 9
